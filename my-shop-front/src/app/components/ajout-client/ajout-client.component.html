@@ -1,0 +1,99 @@
+<div class="flex justify-around">
+  <div class="w-1/3 flex justify-around border shadow-sm rounded-xl h-5/6">
+    <form
+      class="max-w-md mx-auto my-4 w-full"
+      [formGroup]="clientForm"
+      (submit)="addClient()"
+    >
+      <div class="w-full">
+        <h2 class="font-normal rounded-md text-2xl text-center">
+          @if(isUpdate){ Modifier un client } @else{ Ajouter un client }
+        </h2>
+      </div>
+      <div class="w-full px-4 py-2">
+        <label for="nom" class="block mb-2 text-sm font-medium text-gray-900">Nom</label>
+        <input
+          type="text"
+          placeholder="Votre nom"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+          formControlName="nom"
+        />
+
+        @if(clientForm.get('nom')?.touched){
+          @if(clientForm.get('nom')?.hasError('required')){
+            <h4 class="text-left font-semibold text-red-600 text-sm"><i class="bx bx-error-circle text-lg"></i> Ce champ est obligatoire</h4>
+          }
+          @if(clientForm.get('nom')?.hasError('pattern')){
+            <h4 class="text-left font-semibold text-red-600 text-sm"><i class="bx bx-error-circle text-lg"></i> Chaine non valide</h4>
+          }
+        }
+      </div>
+      <div class="w-full px-4 py-2">
+        <label for="nom" class="block mb-2 text-sm font-medium text-gray-900">Prenoms</label>
+        <input
+          type="text"
+          placeholder="Votre prenoms"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+          formControlName="prenoms"
+        />
+
+        @if(clientForm.get('prenoms')?.touched && clientForm.get('prenoms')?.hasError('pattern')){
+            <h4 class="text-left font-semibold text-red-600 text-sm"><i class="bx bx-error-circle text-lg"></i> Chaine non valide</h4>
+        }
+      </div>
+      <div class="w-full px-4 py-2">
+        <label for="nom" class="block mb-2 text-sm font-medium text-gray-900"
+          >Numéro Téléphone</label
+        >
+        <input
+          type="text"
+          placeholder="0347196531"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+          formControlName="numTel"
+        />
+        @if(clientForm.get('numTel')?.touched){
+          @if(clientForm.get('numTel')?.hasError('required')){
+            <h4 class="text-left font-semibold text-red-600 text-sm"><i class="bx bx-error-circle text-lg"></i> Ce champ est obligatoire</h4>
+          }
+          @if(clientForm.get('numTel')?.hasError('pattern')){
+            <h4 class="text-left font-semibold text-red-600 text-sm"><i class="bx bx-error-circle text-lg"></i> Chaine non valide</h4>
+          }
+        }
+      </div>
+      <div class="w-full px-4 py-2">
+        <label for="adresse" class="block mb-2 text-sm font-medium text-gray-900"
+          >Adresse</label
+        >
+        <input
+          type="text"
+          placeholder="Anjanahary"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+          formControlName="adresse"
+        />
+        @if(clientForm.get('adresse')?.touched){
+          @if(clientForm.get('adresse')?.hasError('required')){
+            <h4 class="text-left font-semibold text-red-600 text-sm"><i class="bx bx-error-circle text-lg"></i> Ce champ est obligatoire</h4>
+          }
+          @if(clientForm.get('adresse')?.hasError('pattern')){
+            <h4 class="text-left font-semibold text-red-600 text-sm"><i class="bx bx-error-circle text-lg"></i> Chaine non valide</h4>
+          }
+        }
+      </div>
+      <div class="w-full px-4 py-2 ml-1">
+        <button
+          type="submit"
+          class="mx-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          @if(isUpdate){ Modifier } @else{ Ajouter }
+        </button>
+        <button
+          type="reset"
+          class="mx-1 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Annuler
+        </button>
+      </div>
+    </form>
+  </div>
+
+</div>

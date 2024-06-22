@@ -1,0 +1,186 @@
+<button
+  class="fixed right-1 bg-red-400 hover:cursor-pointer hover:bg-red-600 z-10 px-4 py-2 mr-5 rounded-lg"
+  data-modal-target="cartModal"
+  data-modal-toggle="cartModal"
+>
+  <i class="bx bx-cart text-2xl text-white"></i>
+</button>
+<div class="flex flex-wrap">
+  @for (p of listProduit; track $index) {
+  <div
+    class="w-1/4 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-7 my-3"
+  >
+    <img class="p-8 rounded-t-lg h-48 ml-4 w-3/4" [src]="p.imgUrl" alt="product image" />
+    <div class="px-5 pb-5">
+      <h5
+        class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"
+      >
+        {{ p.nom | uppercase }} <br />{{ p.category }}
+      </h5>
+      <div class="flex items-center mt-2.5 mb-5">
+        <div class="flex items-center space-x-1 rtl:space-x-reverse">
+          @for (item of [0,1,2,3,4]; track $index) {
+          <svg
+            class="w-4 h-4"
+            [ngClass]="getStarColor(p.note,$index)"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 22 20"
+          >
+            <path
+              d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+            />
+          </svg>
+          }
+        </div>
+        <span
+          class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3"
+          >{{ p.note }}</span
+        >
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="text-3xl font-bold text-gray-900 dark:text-white"
+          >{{ p.prix }} Ar</span
+        >
+        <a
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:cursor-pointer"
+          (click)="addToCart(p)"
+          >Ajouter</a
+        >
+      </div>
+    </div>
+  </div>
+  }
+</div>
+
+<div
+  id="cartModal"
+  tabindex="-1"
+  aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-screen md:inset-0 h-[calc(100%-1rem)] max-h-full"
+>
+  <div class="relative p-4 w-full max-w-screen-md h-3/4 overflow-y-auto">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <button
+        type="button"
+        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+        data-modal-hide="cartModal"
+        (click)="deletePanier()"
+      >
+        <svg
+          class="w-3 h-3"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 14"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+          />
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+      <div class="p-4 md:p-5">
+        <h3 class="mb-1 text-xl font-bold text-gray-900 dark:text-white text-center uppercase ">
+          Votre Panier
+        </h3>
+        <div class="w-full text-center my-4">
+          <select #client class="w-1/2 bg-gray-50 text-gray-500 rounded-md border-gray-300" (change)="getClientActif($event)">
+            @for (client of listClient; track $index) {
+              <option [value]="client.id">{{client.nom | uppercase}} {{client.prenoms | titlecase}}</option>
+            }
+          </select>
+        </div>
+        <app-panier></app-panier>
+        <div class="flex items-center mt-6 space-x-4 rtl:space-x-reverse">
+          <button
+            data-modal-hide="cartModal"
+            type="button"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            (click)="faireAchat()"
+          >
+            Confirmer achat
+          </button>
+          <button
+            (click)="deletePanier()"
+            type="button"
+            class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          >
+            Vider panier
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="-w-full">
+  <a (click)="generateFacture()">tay</a>
+</div> -->
+
+<div class="" style="transform: translateX(-1000px);">
+  <div class="w-1/2 h-auto" id="facture">
+    <h4 class="text-lg font-semibold text-center">Facture</h4>
+    <br>
+    @if (clientActif) {
+      <h1 class="text-sm font-semibold">Client : {{clientActif.nom | uppercase}}  {{clientActif.prenoms | titlecase}}</h1>
+    }
+    <br>
+    @if (currentDate) {
+      <h1 class="text-sm font-semibold">Date : {{currentDate}}</h1>
+    }
+    <br>
+  <div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Produit
+                </th>
+
+                <th scope="col" class="px-6 py-3">
+                    Quantite
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Prix
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (i of listFacture; track $index) {
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{i.nom}}
+                </th>
+                <td class="px-6 py-4">
+                    {{i.qteCommande}}
+                </td>
+
+                <td class="px-6 py-4">
+                    {{i.prixTotal}}
+                </td>
+            </tr>
+            }
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" colspan="2" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Total
+                </th>
+                @if (total) {
+                  <td class="px-6 py-4">
+                    {{total}} Ar
+                </td>
+                }
+            </tr>
+        </tbody>
+    </table>
+    <div class="w-1/2 ml-52">
+      <qrcode [qrdata]="qr" size="256" level="'M'"></qrcode>
+    </div>
+  </div>
+  </div>
+</div>

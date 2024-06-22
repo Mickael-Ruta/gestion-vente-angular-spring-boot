@@ -1,0 +1,95 @@
+
+<div class="flex justify-around w-full pr-3">
+  <div
+    class="flex flex-col items-center h-24 bg-white border border-gray-200 rounded-lg  md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 w-1/3 mx-3 p-2"
+  >
+    <img src="../../../assets/stock.jpg" alt="" class="w-35 h-full">
+    <div class="flex flex-col justify-between p-4 leading-normal">
+      <h5
+        class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white"
+      >
+        Stock
+      </h5>
+      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-center">{{totalStock}}</p>
+    </div>
+  </div>
+  <div
+    class="flex flex-col items-center h-24 bg-white border border-gray-200 rounded-lg  md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 w-1/3 mx-3 p-2"
+  >
+    <img src="../../../assets/dollar.webp" alt="" class="w-35 h-full">
+    <div class="flex flex-col justify-between p-4 leading-normal">
+      <h5
+        class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white"
+      >
+       Total vendu
+      </h5>
+      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-center">{{totalVendu}}</p>
+    </div>
+  </div>
+  <div
+    class="flex flex-col items-center h-24 bg-white border border-gray-200 rounded-lg  md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 w-1/3 mx-3 p-2"
+  >
+    <img src="../../../assets/images (2).png" alt="" class="w-35 h-full">
+    <div class="flex flex-col justify-between p-4 leading-normal">
+      <h5
+        class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white"
+      >
+        Vendu aujourd'hui
+      </h5>
+      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-center">{{revenuDays}} Ar</p>
+    </div>
+  </div>
+</div>
+
+<div class="flex justify-around w-full my-7 pr-3">
+
+  <div class="w-1/2 rounded-lg shadow border border-gray-200 my-3 mx-3">
+    <canvas id="lineChart"></canvas>
+  </div>
+  <div class="w-1/2 rounded-lg shadow border border-gray-200 my-3 mx-3">
+    <canvas id="barChart"></canvas>
+  </div>
+</div>
+
+<div class="flex justify-center pr-3">
+  @for (p of top3Produit; track $index) {
+    <div
+      class="w-1/4 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-7 my-3"
+    >
+      <img class="p-8 rounded-t-lg h-48 ml-4 w-3/4" [src]="p.imgUrl" alt="product image" />
+      <div class="px-5 pb-5">
+        <h5
+          class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"
+        >
+          {{ p.nom | uppercase }} <br />{{ p.category }}
+        </h5>
+        <div class="flex items-center mt-2.5 mb-5">
+          <div class="flex items-center space-x-1 rtl:space-x-reverse">
+            @for (item of [0,1,2,3,4]; track $index) {
+            <svg
+              class="w-4 h-4"
+              [ngClass]="getStarColor(p.note,$index)"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 22 20"
+            >
+              <path
+                d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+              />
+            </svg>
+            }
+          </div>
+          <span
+            class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3"
+            >{{ p.note }}</span
+          >
+        </div>
+        <div class="w-full text-left font-semibold">
+          <h4>Nombre vendu : {{ p.nbreVendu }}</h4>
+        </div>
+
+      </div>
+    </div>
+    }
+</div>

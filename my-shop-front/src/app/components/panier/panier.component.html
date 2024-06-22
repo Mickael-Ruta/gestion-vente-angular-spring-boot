@@ -1,0 +1,51 @@
+
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg h-1/2">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+              <th scope="col" class="px-16 py-3 text-center">
+                  Image
+              </th>
+              <th scope="col" class="px-6 py-3 text-center">
+                  Produit
+              </th>
+              <th scope="col" class="px-6 py-3 text-center">
+                  Quantite
+              </th>
+              <th scope="col" class="px-6 py-3 text-center">
+                  Prix
+              </th>
+              <th scope="col" class="px-6 py-3 text-center">
+                  Action
+              </th>
+          </tr>
+      </thead>
+      <tbody>
+          @if(listAchat){
+            @for (item of listAchat  ; track $index) {
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-600">
+                <td class="text-center p-4">
+                    <img [src]="item.imgUrl" class="w-16 md:w-32 max-h-full h-16" alt="Apple iMac">
+                </td>
+                <td class="text-center px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                    {{item.nom}}
+                </td>
+                <td class="text-center px-6 py-4">
+                  <div class="flex items-center">
+                    <input type="number" class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  placeholder="qte" required (change)="updatePrix(item)" [id]="item.id" [(ngModel)]="item.qteCommande"/>
+                  </div>
+                </td>
+                <td class="text-center px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                    {{item.prixTotal}}
+                </td>
+                <td class="text-center px-6 py-4" (click)="deleteProd(item)">
+                    <a class="font-medium text-red-600 dark:text-red-500 hover:underline"><i class="bx bx-trash text-red-700 hover:text-red-500 hover:cursor-pointer text-2xl"></i></a>
+                </td>
+            </tr>
+            }
+          }
+
+      </tbody>
+  </table>
+</div>
