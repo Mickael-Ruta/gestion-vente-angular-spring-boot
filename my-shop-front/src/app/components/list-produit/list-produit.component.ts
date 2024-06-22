@@ -4,11 +4,12 @@ import { Iproduit } from '../../interfaces/interface';
 import { ProduitService } from '../../services/produit.service';
 import { RouterLink } from '@angular/router';
 import { NgFor, NgIf, TitleCasePipe, UpperCasePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-list-produit',
   standalone: true,
-  imports: [RouterLink,UpperCasePipe,TitleCasePipe],
+  imports: [RouterLink,UpperCasePipe,TitleCasePipe,FormsModule],
   templateUrl: './list-produit.component.html',
   styleUrl: './list-produit.component.scss'
 })
@@ -36,6 +37,7 @@ export class ListProduitComponent implements OnInit,AfterViewInit{
       {
         next:(res:Iproduit[])=>{
           this.listProduit=res
+          this.filtredProd=res
           console.log(res)
 
         },
@@ -69,5 +71,26 @@ export class ListProduitComponent implements OnInit,AfterViewInit{
         }
       )
     }
+  }
+
+  private _produitFilter = ""
+  public filtredProd : Iproduit[]=[]
+
+  public get produitFilter(){
+    return this._produitFilter
+  }
+
+  public set produitFilter(filtre:string){
+    this._produitFilter=filtre
+    this.filtredProd = this.produitFilter ? this.filtre(this.produitFilter) : this.listProduit
+
+  }
+
+
+  public filtre(critere : string){
+    let cri = critere.toLowerCase()
+
+    let res = this.listProduit.filter((prod)=>prod.nom.toLowerCase().indexOf(cri)!=-1)
+    return res
   }
 }
